@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hydra-code-x"
+version = "0.1.1"
+description = "HYDRA-CODE X research coding foundation model"
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.2",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+xla = ["torch-xla>=2.2"]
