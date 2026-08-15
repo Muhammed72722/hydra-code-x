@@ -1,34 +1,15 @@
 # HYDRA-CODE X
 
-Research implementation of the HYDRA-CODE X coding foundation model.
+Research implementation scaffold for HYDRA-CODE X.
 
-## v0.1.1
+## A0 target
+- ~300M parameter hybrid decoder
+- 12 layers: 8 Mamba-path layers + 4 GQA attention layers
+- d_model=1536
+- vocab=32768
+- 8K context
+- BF16-ready
+- reference PyTorch backend first
 
-The first milestone is **HYDRA-300M-A0**, a clean hybrid baseline:
-
-- 12 decoder blocks
-- 8 Mamba-3-style reference SSM blocks
-- 4 GQA attention blocks
-- 1280 hidden size
-- 3584 SwiGLU intermediate size
-- 32K vocabulary
-- 8K training context
-- FIM-ready causal language-model interface
-- Working Memory disabled in A0 so it is a clean ablation baseline
-
-### Important reference-model note
-
-`hydra/ssm/mamba3_reference.py` is a pure-PyTorch research reference inspired by the public Mamba-3 design. It deliberately does **not** claim bitwise parity with the upstream fused SISO/MIMO kernels. The upstream implementation currently uses CUDA-oriented Triton/TileLang/CUTE kernels. HYDRA will validate the reference path first, then add dedicated CUDA and XLA backends.
-
-## Development
-
-```bash
-pip install -e '.[test]'
-pytest -q
-```
-
-For direct source-tree tests without installation:
-
-```bash
-PYTHONPATH=. pytest -q
-```
+## Important
+`hydra/ssm/mamba3_reference.py` is a **research reference SSM**, not a claim of exact parity with upstream Mamba-3. The interface is intentionally isolated so an exact/optimized Mamba-3 kernel can replace it after numerical validation.

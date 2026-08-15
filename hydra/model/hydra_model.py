@@ -24,7 +24,7 @@ class HydraModel(nn.Module):
         if config.tie_embeddings:
             self.lm_head.weight = self.embed.embedding.weight
 
-    def forward(self, input_ids, labels=None):
+    def forward(self, input_ids, labels=None, loss_mask=None):
         x = self.embed(input_ids)
         states = [None] * self.config.n_layers
 
@@ -38,9 +38,18 @@ class HydraModel(nn.Module):
         if labels is not None:
             shift_logits = logits[:, :-1].contiguous()
             shift_labels = labels[:, 1:].contiguous()
-            loss = torch.nn.functional.cross_entropy(
-                shift_logits.view(-1, shift_logits.size(-1)),
-                shift_labels.view(-1),
-            )
+            if loss_mask is None:
+                loss = torch.nn.functional.cross_entropy(
+                    shift_logits.view(-1, shift_logits.size(-1)),
+                    shift_labels.view(-1),
+                    ignore_index=-100,
+                )
+            else:
+                mask = loss_mask[:, 1:].reshape(-1).bool()
+                flat_logits = shift_logits.view(-1, shift_logits.size(-1))
+                flat_labels = shift_labels.view(-1)
+                loss = torch.nn.functional.cross_entropy(
+                    flat_logits[mask], flat_labels[mask], ignore_index=-100
+                ) if mask.any() else flat_logits.sum() * 0.0
             out["loss"] = loss
         return out
