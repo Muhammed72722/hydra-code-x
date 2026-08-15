@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hydra-code-x"
-version = "0.1.1"
+version = "0.1.6"
 description = "HYDRA-CODE X research coding foundation model"
 requires-python = ">=3.10"
 dependencies = [
@@ -15,3 +15,9 @@ dependencies = [
 [project.optional-dependencies]
 test = ["pytest>=8.0"]
 xla = ["torch-xla>=2.2"]
+tokenizer = ["tokenizers>=0.20", "sentencepiece>=0.2.0"]
+parquet = ["pyarrow>=16.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
