@@ -1,0 +1,25 @@
+experiment: tokenizer_ablation
+seed: 1337
+candidates: [32768, 49152, 65536]
+model:
+  parameters_target: 300000000
+  context: 8192
+training:
+  tokens: 500000000
+  micro_batch: 1
+  grad_accum: 32
+  lr: 0.0003
+  warmup_ratio: 0.02
+  weight_decay: 0.1
+  precision: bf16
+evaluation:
+  checkpoints: [0.05, 0.25, 0.50, 0.75, 1.0]
+  suites:
+    - fim
+    - code_completion
+    - human_eval_plus
+    - mbpp_plus
+  selection:
+    primary: coding_score
+    secondary: fim_score
+    tie_breaker: tokens_per_byte

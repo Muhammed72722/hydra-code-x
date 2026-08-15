@@ -1,0 +1,38 @@
+corpus:
+  source_version: "the-stack-v2-or-approved-local-source"
+  require_license: true
+  reject_noassertion: true
+  exact_dedup: true
+  near_dedup: true
+  min_quality: 0.35
+  max_file_bytes: 1000000
+  allowed_languages:
+    - python
+    - javascript
+    - typescript
+    - rust
+    - go
+    - java
+    - c
+    - c++
+    - c-sharp
+    - ruby
+    - php
+    - swift
+    - kotlin
+    - scala
+    - shell
+    - sql
+    - lua
+  allowed_spdx:
+    - MIT
+    - Apache-2.0
+    - BSD-2-Clause
+    - BSD-3-Clause
+    - ISC
+    - Zlib
+    - Unlicense
+    - CC0-1.0
+    - 0BSD
+    - MPL-2.0
+    - EPL-2.0
