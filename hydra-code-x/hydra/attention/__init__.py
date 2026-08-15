@@ -1,1 +1,0 @@
-from .gqa import LocalGQA
